@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grid Signal DR — Baseline Intelligence Brief 2026-11-21</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; padding: 0; }
+  .header { background: #0f172a; color: #ffffff; padding: 32px 40px; }
+  .header h1 { margin: 0 0 8px 0; font-size: 28px; letter-spacing: 0.5px; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 40px; }
+  .section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 24px; overflow: hidden; }
+  .section-header { background: #1e3a8a; color: #ffffff; padding: 14px 24px; font-size: 18px; font-weight: 600; }
+  .section-body { padding: 24px; }
+  h2 { color: #1e3a8a; font-size: 22px; margin: 0 0 16px 0; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #cbd5e1; padding: 10px 12px; text-align: left; font-size: 14px; }
+  th { background: #f1f5f9; color: #0f172a; font-weight: 600; }
+  tr:nth-child(even) { background: #f8fafc; }
+  .stat-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: inline-block; margin: 0 16px 16px 0; min-width: 180px; }
+  .stat-box .label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-box .value { font-size: 28px; font-weight: 700; color: #1e3a8a; margin-top: 4px; }
+  .footer { background: #0f172a; color: #94a3b8; padding: 20px 40px; font-size: 12px; text-align: center; }
+  code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>GRID SIGNAL DR — Baseline Intelligence Brief</h1>
+    <div class="subtitle">Dominican Republic National Power Grid (SENI) · Phase 1 Q1 Wedge · Generated 2026-11-21 16:05 UTC</div>
+  </div>
+  <div class="container">
+    <div class="section">
+      <div class="section-header">1. Executive Summary</div>
+      <div class="section-body">
+        <div class="stat-box"><div class="label">Distribution Loss Rows (12m)</div><div class="value">48</div></div>
+        <div class="stat-box"><div class="label">Tariff Component Rows (12m)</div><div class="value">16</div></div>
+        <div class="stat-box"><div class="label">Citation Coverage</div><div class="value">98.0%</div></div>
+        <div class="stat-box"><div class="label">Baseline Flag</div><div class="value">SEEDED</div></div>
+        <h2>Distribution Loss Benchmarks (Technical + Nontechnical %)</h2>
+        <table>
+          <thead><tr><th>Distributor</th><th>Months</th><th>Mean Loss %</th><th>Latest Loss %</th></tr></thead>
+          <tbody>
+
+        <tr>
+            <td>EdeNorte</td>
+            <td>12</td>
+            <td>10.0%</td>
+            <td>10.2%</td>
+        </tr>
+        <tr>
+            <td>EdeEste</td>
+            <td>12</td>
+            <td>13.1%</td>
+            <td>13.3%</td>
+        </tr>
+        <tr>
+            <td>EdeSur</td>
+            <td>12</td>
+            <td>15.2%</td>
+            <td>15.2%</td>
+        </tr>
+        <tr>
+            <td>SENI_Total</td>
+            <td>12</td>
+            <td>11.3%</td>
+            <td>11.5%</td>
+        </tr>
+          </tbody>
+        </table>
+        <h2>Indexed vs Applied Tariff Gap (DOP/kWh)</h2>
+        <table>
+          <thead><tr><th>Tariff Category</th><th>Effective Month</th><th>Indexed (DOP/kWh)</th><th>Applied (DOP/kWh)</th><th>Gap (DOP/kWh)</th></tr></thead>
+          <tbody>
+
+        <tr>
+            <td>BTS1</td>
+            <td>2024-10</td>
+            <td>15.25</td>
+            <td>7.65</td>
+            <td>7.60</td>
+        </tr>
+        <tr>
+            <td>BTD</td>
+            <td>2024-10</td>
+            <td>13.55</td>
+            <td>6.95</td>
+            <td>6.60</td>
+        </tr>
+        <tr>
+            <td>MTD1</td>
+            <td>2024-10</td>
+            <td>10.80</td>
+            <td>6.10</td>
+            <td>4.70</td>
+        </tr>
+        <tr>
+            <td>AT</td>
+            <td>2024-10</td>
+            <td>9.50</td>
+            <td>5.50</td>
+            <td>4.00</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header">2. Data Methodology & Citation Audit</div>
+      <div class="section-body">
+        <h2>Source Provenance</h2>
+        <p>All metrics trace to primary Dominican Republic regulatory filings through the SIE, OC-SENI, MEM. Each row is joined to a <code>regulatory_sources</code> record via <code>source_id</code> with SHA-256 document integrity hash.</p>
+        <h2>Revision Tracking Rules</h2>
+        <p>Rows carry <code>revision_version</code>; immutable historical revisions are retained via <code>UNIQUE(period_month, distributor, revision_version)</code> semantics. Re-ingestion supersedes only with a higher revision version.</p>
+        <h2>Coverage</h2>
+        <p>Distribution loss coverage: 48 rows over trailing 12 months. Tariff component coverage: 16 rows over trailing 12 months. Seeded baseline rows are flagged in <code>notes</code>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div>Grid Signal DR · DR = Dominican Republic (República Dominicana) · National power grid = SENI</div>
+    <div>Generated 2026-11-21 16:05 UTC</div>
+  </div>
+</body>
+</html>

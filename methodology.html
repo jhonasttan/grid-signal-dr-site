@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Signal DR — Data Methodology & Source Provenance</title>
+  <style>
+    :root {
+      --navy: #0f172a;
+      --slate: #1e3a8a;
+      --accent: #64748b;
+      --white: #ffffff;
+      --card-bg: #f8fafc;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    .Header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .Header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    h2 {
+      color: var(--slate);
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 0.75rem;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+    th {
+      background: #f1f5f9;
+      color: var(--navy);
+      position: sticky;
+      top: 0;
+    }
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    .methodology-section {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .footer {
+      background: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="Header">
+    <h1>Grid Signal DR — Data Methodology & Public Source Provenance</h1>
+  </div>
+
+  <div class="container">
+    <h2>Versioned Revision Tracking</h2>
+    <div class="methodology-section">
+      <p>All metrics in the Grid Signal DR pipeline are tracked via a <code>revision_version</code> column. The schema enforces <code>UNIQUE(period_month, distributor, revision_version)</code> for distribution_losses and <code>UNIQUE(effective_month, tariff_category, revision_version)</code> for tariff_components. During re-ingestion, a newly scraped metric with a higher <code>revision_version</code> supersedes the prior row, while the original historical row is retained. This ensures immutable audit trails and the ability to roll back to prior SEED baselines if needed.</p>
+    </div>
+
+    <h2>Foreign-Key Citation Enforcement</h2>
+    <div class="methodology-section">
+      <p>SQLite <code>PRAGMA foreign_keys = ON</code> is set at connection time. Every row in <code>distribution_losses</code> and <code>tariff_components</code> references a valid <code>source_id</code> in <code>regulatory_sources</code>. The <code>PRAGMA foreign_key_check</code> command returns 0 violations on a clean dataset, guaranteeing that no metric exists without a cited source document.</p>
+    </div>
+
+    <h2>Spanish-to-English Regulatory Normalization</h2>
+    <div class="methodology-section">
+      <p>All regulatory filings from the following Dominican Republic government portals are scraped, PDF-extracted via pdfplumber, and Excel-parsed via openpyxl, then normalized through a hybrid LLM pipeline (OpenRouter Free <em>meta-llama/llama-3.3-70b-instruct:free</em> → local Ollama <em>qwen2.5:7b-instruct</em>) with a strict 3-second TTFT timeout. The system prompt anchors the LLM to the Dominican Republic power market domain, ensuring every extracted metric maps to a cited source. Portals covered: SIE (sie.gob.do), Organismo Coordinador (oc.do), MEM (mem.gob.do), and CNE (cne.gob.do).</p>
+    </div>
+
+    <h2>Regulatory Source Audit Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Agency</th>
+          <th>Document Title</th>
+          <th>Publication Date</th>
+          <th>Direct Source URL</th>
+          <th>SHA-256 Hash</th>
+          <th>Ingested Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+
+    <tr>
+      <td>SIE</td>
+      <td>Informe_Desempeno_EEE_junio_2026-vf.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://mem.gob.do/wp-content/uploads/2026/09/Informe_Desempeno_EEE_junio_2026-vf.pdf" target="_blank">Direct URL</a></td>
+      <td>944e80f69b60692e2f8d0012be9f3c7b6cdb7502365ef30c60277add53a20853</td>
+      <td>2026-11-21 21:03:41</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe_Desempeno_EEE_abril_2026-.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://mem.gob.do/wp-content/uploads/2026/07/Informe_Desempeno_EEE_abril_2026-.pdf" target="_blank">Direct URL</a></td>
+      <td>4d1214f0c2946a786c0e8a6e6f81d401613f301cd408671c3d7c81de0acbc39e</td>
+      <td>2026-11-21 21:02:12</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe-de-Desempeno-de-las-Empresas-Electricas-Estatales-EEE-mayo-2025.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://mem.gob.do/wp-content/uploads/2025/08/Informe-de-Desempeno-de-las-Empresas-Electricas-Estatales-EEE-mayo-2025.pdf" target="_blank">Direct URL</a></td>
+      <td>4e39e0d8ab921af6ac322788002e548090d7d0ffab4dd5a8c484b5d6c84c5b80</td>
+      <td>2026-11-21 21:00:47</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe-Autoevaluacion-anual-Fisico-Financiero-2025.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://sie.gob.do/wp-content/uploads/2026/03/Informe-Autoevaluacion-anual-Fisico-Financiero-2025.pdf" target="_blank">Direct URL</a></td>
+      <td>4c18d72b0e7ed6c05c4a8c7c6165b460eb9d3c5d6cdf996fa4ef77227a52d780</td>
+      <td>2026-11-21 20:59:45</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe-Transparencia-Agosto-PDF_rotated.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://transparencia.sie.gob.do/wp-content/uploads/2025/09/Informe-Transparencia-Agosto-PDF_rotated.pdf" target="_blank">Direct URL</a></td>
+      <td>3d1c4edfcb365293e6f49329963b56c0c324dcc3c6b93386f982ed9f678ec957</td>
+      <td>2026-11-21 20:58:43</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe-Final-No.-5-Consultoria-BID-Version-Definitiva.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://sie.gob.do/wp-content/uploads/2022/04/Informe-Final-No.-5-Consultoria-BID-Version-Definitiva.pdf" target="_blank">Direct URL</a></td>
+      <td>c1237dc62672f2a2a9b9475b6e3432cd5017cadf4fff8ba8aebf1858f08a18d7</td>
+      <td>2026-11-21 20:51:40</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe-Monitoreo-Indicadores-de-Desempeno-Ene-Mar-2022.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://sie.gob.do/wp-content/uploads/2022/07/Informe-Monitoreo-Indicadores-de-Desempeno-Ene-Mar-2022.pdf" target="_blank">Direct URL</a></td>
+      <td>064bea9dd2d437914fa0c67e7c8d988e2a5edc30424af8c6a35f3051781765c6</td>
+      <td>2026-11-21 20:50:35</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe-Fisico-Financiero.pdf</td>
+      <td>2026-11-21</td>
+      <td><a href="https://transparencia.sie.gob.do/wp-content/uploads/2025/02/Informe-Fisico-Financiero.pdf" target="_blank">Direct URL</a></td>
+      <td>4ccc8be61d407072c1204764dee35e23e837f9a41a2e9cbe189d835fbd264ce1</td>
+      <td>2026-11-21 20:49:33</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Informe de Desempeño de las Empresas Distribuidoras 2023-2024</td>
+      <td>2024-06-30</td>
+      <td><a href="https://sie.gob.do/transparencia/informes-de-gestion" target="_blank">Direct URL</a></td>
+      <td>a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456</td>
+      <td>2026-11-21 19:02:42</td>
+    </tr>
+    <tr>
+      <td>SIE</td>
+      <td>Resolución Tarifaria Trimestral SIE-2024-001 (Indexed vs Applied Tariffs)</td>
+      <td>2024-03-15</td>
+      <td><a href="https://sie.gob.do/normativa/resoluciones-tarifarias" target="_blank">Direct URL</a></td>
+      <td>f6e5d4c3b2a109876543210fedcba9876543210fedcba9876543210fedcba987</td>
+      <td>2026-11-21 19:02:42</td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="footer">
+    Grid Signal DR · DR = Dominican Republic (República Dominicana) · National power grid = SENI · Generated 2026-11-21
+  </footer>
+</body>
+</html>

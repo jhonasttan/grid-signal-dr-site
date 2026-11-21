@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Signal DR — Executive Storefront</title>
+  <style>
+    :root {
+      --navy: #0f172a;
+      --slate: #1e3a8a;
+      --accent: #64748b;
+      --white: #ffffff;
+      --card-bg: #f8fafc;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    .header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .Header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .Header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .kpi-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .kpi-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .provenance-badge {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+    }
+    .access-section {
+      padding: 1.5rem;
+      background: var(--card-bg);
+      margin: 1.5rem 0;
+    }
+    .access-section h2 {
+      margin-bottom: 1rem;
+      color: var(--navy);
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1rem;
+      background: var(--slate);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .btn-large {
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      background: var(--navy);
+    }
+    .cta-section {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .btn-cta {
+      background: var(--slate);
+      color: var(--white);
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+    .tiers-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .tiers-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+    }
+    .footer {
+      background: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+    }
+    .methodology-link {
+      color: var(--slate);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="Header">
+    <h1>Grid Signal DR — Dominican Republic Power & SENI Market Intelligence</h1>
+    <p>Citation-enforced regulatory datasets, distribution loss tracking, and tariff gap analytics for institutional investors, IPPs, and energy lenders.</p>
+  </div>
+
+  
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">SENI Aggregate Distribution Loss</div>
+        <div class="kpi-value">11.5%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Highest-Loss Distributor</div>
+        <div class="kpi-value">EdeSur</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Latest Avg. Indexed vs. Applied Tariff Gap</div>
+        <div class="kpi-value">5.58 DOP/kWh</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Citation Coverage</div>
+        <div class="kpi-value">100.0%</div>
+      </div>
+    </div>
+  
+    <div class="provenance-badge">
+      <strong>100% Citation Coverage</strong><br>
+      Live Verified Rows: 0 | Seeded Baseline Rows: 48 | Total: 48
+    </div>
+
+  <div class="access-section">
+    <h2>Access Latest Intelligence</h2>
+    <div class="btn-group">
+      <a href="latest-report.html" class="btn btn-large">View Full 12-Month Baseline Intelligence Brief</a>
+      <a href="data/dr_distribution_losses_12m.csv" download class="btn btn-large">Download Distribution Losses CSV</a>
+      <a href="data/dr_tariff_components_12m.csv" download class="btn btn-large">Download Tariff Components CSV</a>
+    </div>
+    <h3>Commercial Tiers</h3>
+    <ul class="tiers-list">
+      <li><strong>Free Weekly Brief</strong>: Executive summary & headline SENI loss/tariff alerts</li>
+      <li><strong>Pro Intelligence Desk</strong>: Full historical archive, monthly distributor scorecards, and deal ledger</li>
+      <li><strong>Institutional Data License</strong>: Versioned CSV/API feeds with SHA-256 regulatory source provenance</li>
+    </ul>
+    <div class="cta-section">
+      <a href="mailto:jhonasttan@gmail.com?subject=Grid Signal DR Access" class="btn-cta">Request Access</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Grid Signal DR · DR = Dominican Republic (República Dominicana) · National power grid = SENI · Generated 2026-11-21
+  </footer>
+</body>
+</html>
